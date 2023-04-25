@@ -1,0 +1,86 @@
+# Arquivos e diretórios gerados pelo Node.js
+node_modules/
+package-lock.json
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Arquivos e diretórios gerados pelo Visual Studio Code
+.vscode/
+*.code-workspace
+
+# Arquivos e diretórios gerados por sistemas operacionais
+.DS_Store
+Thumbs.db
+
+# Arquivos de log
+*.log
+
+# Arquivos de build
+build/
+dist/
+
+# Arquivos de cache
+*.cache
+*.log*
+
+# Arquivos de configuração específicos do projeto
+.env
+
+# Arquivos de saída de testes
+.coverage/
+
+# Arquivos de dependências do Yarn
+.yarn/
+
+# Arquivos de dependências do npm
+npm-debug.log*
+npm-debug.log
+npm-shrinkwrap.json
+
+# Arquivos de dependências do pnpm
+.pnpm-lock.yaml
+shrinkwrap.yaml
+
+# Arquivos de backup
+*.bak
+*.backup
+*.swp
+
+# Arquivos de configuração de IDEs
+.idea/
+*.iml
+*.ipr
+*.iws
+*.log
+*.orig
+
+# Arquivos de cache do Jest
+/.jest/
+
+# Outros arquivos temporários ou gerados
+*.tmp
+*.pid
+*.sock
+*.seed
+*.pid.lock
+*.log.*
+
+# Arquivos de saída de cobertura de código
+coverage/
+
+# Arquivos de build do Webpack
+/dist/
+
+# Arquivos de build do Parcel
+/.cache/
+/dist/
+
+# Outros arquivos e diretórios específicos do projeto
+/dist/
+/public/
+/docs/
+/out/
+/.next/
+/out/
+/static/
