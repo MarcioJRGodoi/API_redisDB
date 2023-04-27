@@ -32,6 +32,7 @@ module.exports = async function() {
   try {
     const conn = await configureRedisClient();
     global.conn = conn;
+    return conn;
   } catch (err) {
     console.error('Erro ao estabelecer conexão Redis:', err);
   }
