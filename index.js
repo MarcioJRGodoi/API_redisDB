@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const conn = require('./db/redisconfig');
+
 conn()
 .then(() => {
   console.log('Conexão Redis estabelecida com sucesso');

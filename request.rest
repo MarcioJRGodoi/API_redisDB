@@ -8,6 +8,8 @@ Content-Type: application/json
 }
 
 # GET /get - Obtém o valor da chave "chave1"
+###
 
 GET http://localhost:3002/get?key=chave1
+###
 
