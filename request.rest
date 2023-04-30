@@ -1,15 +1,20 @@
 # POST /set - Define um valor na chave "chave1"
-POST http://localhost:3002/set/foo/ff
-Content-Type: application/json
+POST http://localhost:3002/set
+ Content-Type: application/json
 
-{
-  "key": "chave1",
-  "value": "valor1"
-}
-
+ {
+   "chave": "chave1",
+   "valor": "valor1"
+ }
 # GET /get - Obtém o valor da chave "chave1"
 ###
 
-GET http://localhost:3002/get?key=chave1
+GET http://localhost:3002/get/chave
 ###
+POST http://localhost:3002/set/items
+
+{
+  "chave": "1",
+  "valor": "Item 1",
+}
 

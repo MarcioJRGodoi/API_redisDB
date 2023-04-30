@@ -1,18 +1,15 @@
-const router = require("express").Router();
-const { setAsync } = require('../db/redisconfig');
+const express = require("express");
+const router = express.Router();
 
-router.post('/:chave/:valor', async (req, res) => {
-    const chave = req.params.chave;
-    const valor = req.params.valor;
-    if (!chave) {
-        return res.status(400).json({ error: 'Chave não fornecida' });
-    }
-  try {
-    await setAsync(chave, valor);
-    res.json({ chave, valor });
-  } catch (err) {
-    res.status(500).json({ error: 'Erro ao adicionar valor ao Redis' });
-  }
-});
+const itemController = require("../controller/index");
+
+router
+    .route("/items")
+    .post((req, res) => itemController.create( req, res ));
+    
+router.get("/items", itemController.getAll);
+router.get("/items/:id", itemController.get);
+router.delete("/items/:id", itemController.delete);
+router.put("/items/:id", itemController.update);
 
 module.exports = router;

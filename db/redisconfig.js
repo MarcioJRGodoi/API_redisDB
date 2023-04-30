@@ -2,38 +2,32 @@ const redis = require('redis');
 const { promisify } = require('util');
 
 async function configureRedisClient() {
-    const client = redis.createClient({
-        password: 'RYYzD3Y3bqF3be2wGqto4lSwcfBfAKRq',
-        socket: {
-            host: 'redis-13453.c8.us-east-1-4.ec2.cloud.redislabs.com',
-            port: 13453
-        }
+  try{
+    const client = await redis.createClient({
+      url: "redis://default:Y8JmIHCKLDskYrd5IBk5gJEOuFwa6rnQ@redis-11439.c274.us-east-1-3.ec2.cloud.redislabs.com:11439"
     });
-
+     client.connect();
     
-     new Promise((resolve, reject) => {
+    const setAsync = promisify(client.set).bind(client);
+     return new Promise(async (resolve, reject) => {
         
-        client.on('error', (err) => {
+        await client.on('error', (err) => {
             console.error('Erro ao conectar ao banco Redis:', err);
             reject(err);
         });
 
         
-        client.on('connect', () => {
+        await client.on('connect', () => {
             console.log('Conectado ao banco Redis');
             const getAsync = promisify(client.get).bind(client);
-            const setAsync = promisify(client.set).bind(client);
             resolve({ client, getAsync, setAsync });
         });
     });
+  }
+    catch(err){
+      console.log(err)
+    }
 }
 
-module.exports = async function() {
-  try {
-    const conn = await configureRedisClient();
-    global.conn = conn;
-    return conn;
-  } catch (err) {
-    console.error('Erro ao estabelecer conexão Redis:', err);
-  }
-};
+module.exports = configureRedisClient
+  
