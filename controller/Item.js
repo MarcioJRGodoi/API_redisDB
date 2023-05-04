@@ -7,7 +7,7 @@ const client =  redis.createClient({
    client.connect();
 
 const setAsync = promisify(client.set).bind(client);
-
+const getAsync = promisify(client.get).bind(client);
 const itemController = {
 
     create: async (req, res) => {
@@ -20,7 +20,7 @@ const itemController = {
           
             const response = await setAsync(item.chave, JSON.stringify(item));
           
-            res.status(201).json({ response, msg: "Item criado com sucesso!" });
+            res.status(200).json({ response, msg: "Item criado com sucesso!" });
           } catch (error) {
             console.log(error);
           }
@@ -35,7 +35,7 @@ const itemController = {
 
                 const items = await Promise.all(
                     keys.map(async (key) => {
-                        const value = await getAsync(key);
+                        const value = await get(key);
                         return JSON.parse(value);
                     })
                 );
@@ -50,7 +50,7 @@ const itemController = {
      
     get: async (req, res) => {
         try {
-            const chave = req.params;
+            const chave = req.params.chave;
 
             const item = await getAsync(chave);
 
