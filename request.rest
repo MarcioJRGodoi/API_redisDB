@@ -3,7 +3,7 @@ POST http://localhost:3002/api/items
 Content-Type: application/json
 
  {
-   "chave": "chave22222",
+   "chave": "funcionou",
    "valor": "valor222222"
  }
 # GET /get - Obtém o valor da chave "chave1"
