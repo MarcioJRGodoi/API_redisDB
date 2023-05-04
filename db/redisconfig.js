@@ -7,6 +7,7 @@ async function configureRedisClient() {
       url: "redis://default:Y8JmIHCKLDskYrd5IBk5gJEOuFwa6rnQ@redis-11439.c274.us-east-1-3.ec2.cloud.redislabs.com:11439"
     });
      client.connect();
+
     
     const setAsync = promisify(client.set).bind(client);
      return new Promise(async (resolve, reject) => {
@@ -22,7 +23,7 @@ async function configureRedisClient() {
             const getAsync = promisify(client.get).bind(client);
             resolve({ client, getAsync, setAsync });
         });
-    });
+    });    
   }
     catch(err){
       console.log(err)

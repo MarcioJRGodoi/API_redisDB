@@ -1,8 +1,11 @@
 const redis = require('redis');
 const { promisify } = require('util');
 
-const client = redis.createClient();
-const getAsync = promisify(client.get).bind(client);
+const client =  redis.createClient({
+    url: "redis://default:Y8JmIHCKLDskYrd5IBk5gJEOuFwa6rnQ@redis-11439.c274.us-east-1-3.ec2.cloud.redislabs.com:11439"
+  });
+   client.connect();
+
 const setAsync = promisify(client.set).bind(client);
 
 const itemController = {
@@ -10,19 +13,18 @@ const itemController = {
     create: async (req, res) => {
 
         try {
-            
             const item = {
-                chave: req.body.id,
-                valor: req.body.nome,
+              chave: req.body.chave,
+              valor: req.body.valor,
             };
-
-            const response = await setAsync(item.id, JSON.stringify(item));
-
+          
+            const response = await setAsync(item.chave, JSON.stringify(item));
+          
             res.status(201).json({ response, msg: "Item criado com sucesso!" });
-
-        } catch (error) {
-            console.log(error)
-        }
+          } catch (error) {
+            console.log(error);
+          }
+          
     },
 
     getAll: async (req, res) => {
@@ -67,7 +69,7 @@ const itemController = {
     delete: async (req, res) => {
         try {
             
-            const id = req.params.id;
+            const id = req.body.id;
 
             client.del(id, (err, response) => {
                 if (err) return console.log(err);
@@ -87,12 +89,11 @@ const itemController = {
     update: async (req, res) => {
         try {
             
-            const id = req.params.id;
+            const id = req.body.id;
 
             const item = {
-                id: req.body.id,
-                nome: req.body.nome,
-                descricao: req.body.descricao,
+                chave: req.body.id,
+                valor: req.body.nome,
             };
 
             const response = await setAsync(id, JSON.stringify(item));
