@@ -12,10 +12,13 @@ router
     .get((req, res) => itemController.getAll(req, res));
 
 router
-    .route("/items/:chave")
+    .route("/items/:hesh/:chave")
     .get((req, res) => itemController.get(req, res))
 
 router.delete("/items/:id", itemController.delete);
-router.put("/items/:id", itemController.update);
+
+router
+    .route("/items")
+    .put((req, res) => itemController.update(req, res));
 
 module.exports = router;

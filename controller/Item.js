@@ -1,9 +1,6 @@
 const redis = require('redis');
 const { promisify } = require('util');
 const { client } = require('../db/redisconfig');
-const setAsync = promisify(client.set).bind(client);
-const getAsync = promisify(client.get).bind(client);
-const scanAsync = promisify(client.scan).bind(client);
 
 const itemController = {
   create: async (req, res) => {
@@ -11,8 +8,9 @@ const itemController = {
       const item = {
         chave: req.body.chave,
         valor: req.body.valor,
+        cod: req.body.cod,
       };
-      const response = await client.set(item.chave, JSON.stringify(item));
+      const response = await client.hSet(item.chave,item.cod,item.valor, JSON.stringify(item));
       res.status(200).json({ response, msg: "Item criado com sucesso!" });
     } catch (error) {
       console.log(error);
@@ -21,25 +19,42 @@ const itemController = {
 
   getAll: async (req, res) => {
     try {
-      let cursor = '0';
-      const items = [];
-      do {
-        const [nextCursor, keys] = await client.get(cursor, 'MATCH', '*', 'COUNT', '100');
-        cursor = nextCursor;
+      const keys = await new Promise((resolve, reject) => {
+        client.keys("*", (err, keys) => {
+          if (err) reject(err);
+          resolve(keys);
+        });
+      });
+      client.
+      console.log("Keys:", keys);
   
-        const values = await Promise.all(keys.map(key => getAsync(key)));
-        items.push(...values.map(value => JSON.parse(value)));
-      } while (cursor !== '0');
+      const values = await new Promise((resolve, reject) => {
+        client.get(keys, (err, values) => {
+          if (err) reject(err);
+          resolve(values);
+        });
+      });
   
-      res.json(items);
+      console.log("Values:", values);
+      
+      const data = {};
+      keys.forEach((key, index) => {
+        const value = values[index];
+        if (value !== null) {
+          data[key] = value;
+        }
+      });
+  
+      res.json(data);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   },
   get: async (req, res) => {
     try {
       const chave = req.params.chave;
-      const item = await client.get(chave);
+      const hesh = req.params.hesh;
+      const item = await client.hGet(hesh, chave);
       if (!item) {
         res.status(404).json({ msg: "Item não encontrado." });
         return;
@@ -68,12 +83,12 @@ const itemController = {
 
   update: async (req, res) => {
     try {
-      const id = req.body.id;
       const item = {
-        chave: req.body.id,
-        valor: req.body.nome,
+        chave: req.body.chave,
+        valor: req.body.valor,
+        cod: req.body.cod,
       };
-      const response = await setAsync(id, JSON.stringify(item));
+      const response = await client.hSet(item.chave,item.valor, item.cod, JSON.stringify(item));
       res.status(200).json({ item, msg: "Item atualizado com sucesso!" });
     } catch (error) {
       console.log(error);
