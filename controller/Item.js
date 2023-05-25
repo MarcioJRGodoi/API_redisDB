@@ -19,33 +19,17 @@ const itemController = {
 
   getAll: async (req, res) => {
     try {
-      const keys = await new Promise((resolve, reject) => {
-        client.keys("*", (err, keys) => {
-          if (err) reject(err);
-          resolve(keys);
-        });
+      const hesh = req.params.hesh;
+      const item = await client.hVals(hesh);
+      if (!item) {
+        res.status(404).json({ msg: "Item não encontrado." });
+        return;
+      }
+      const valores = item.map(str => {
+        const obj = JSON.parse(str);
+        return obj; // assumindo que o valor desejado é a propriedade 'value'
       });
-      client.
-      console.log("Keys:", keys);
-  
-      const values = await new Promise((resolve, reject) => {
-        client.get(keys, (err, values) => {
-          if (err) reject(err);
-          resolve(values);
-        });
-      });
-  
-      console.log("Values:", values);
-      
-      const data = {};
-      keys.forEach((key, index) => {
-        const value = values[index];
-        if (value !== null) {
-          data[key] = value;
-        }
-      });
-  
-      res.json(data);
+      res.json(valores);
     } catch (error) {
       console.log(error);
     }
@@ -83,13 +67,22 @@ const itemController = {
 
   update: async (req, res) => {
     try {
+      const hash = req.params.hash;
+      const chave = req.params.chave
+      const chaveExiste = await client.hExists(hash, chave);
+
+      if (!chaveExiste) {
+        res.status(404).json({ msg: "Chave não encontrada." });
+        return;
+      }
       const item = {
-        chave: req.body.chave,
-        valor: req.body.valor,
-        cod: req.body.cod,
+        nome: req.body.nome,
+        adress: req.body.adress,
+        aniversario: req.body.aniversario,
+        numero: req.body.numero,
       };
-      const response = await client.hSet(item.chave,item.valor, item.cod, JSON.stringify(item));
-      res.status(200).json({ item, msg: "Item atualizado com sucesso!" });
+      const response = await client.hSet(hash,chave, JSON.stringify(item));
+      res.status(200).json({ response, msg: "Item atualizado com sucesso!" });
     } catch (error) {
       console.log(error);
     }

@@ -19,13 +19,20 @@ Content-Type: application/json
  }
 ###
 
-GET http://localhost:3002/api/items/Pessoas/Kailey
+GET http://localhost:3002/api/items/Pessoas/marcio
 ###
-POST http://localhost:3002/api/items
+
+###
+GET http://localhost:3002/api/items/Pessoas
+
+###
+PUT http://localhost:3002/api/items/Pessoas/marcio
 Content-Type: application/json
 
 {
-  "chave": "1",
-  "valor": "Item 1"
+  "nome": "marcio",
+  "adress": "Rua do caralho",
+  "aniversario": "10-10-10",
+  "numero": "A"
 }
 

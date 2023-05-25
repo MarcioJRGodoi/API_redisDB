@@ -8,7 +8,7 @@ router
     .post((req, res) => itemController.create( req, res ));
     
 router
-    .route("/items")
+    .route("/items/:hesh")
     .get((req, res) => itemController.getAll(req, res));
 
 router
@@ -18,7 +18,7 @@ router
 router.delete("/items/:id", itemController.delete);
 
 router
-    .route("/items")
+    .route("/items/:hash/:chave")
     .put((req, res) => itemController.update(req, res));
 
 module.exports = router;

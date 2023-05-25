@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 
 app.use(bodyParser.json());
   // Importar as rotas
-const routes = require("./routes/router")
+const routes = require("./routes/router") 
 // Registrar as rotas
 app.use('/api', routes);
 // Iniciar o servidor na porta 3000
