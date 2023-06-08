@@ -19,20 +19,20 @@ Content-Type: application/json
  }
 ###
 
-GET http://localhost:3002/api/items/Pessoas/marcio
+GET http://localhost:3002/api/items/Pessoas/marci
 ###
 
 ###
 GET http://localhost:3002/api/items/Pessoas
 
 ###
-PUT http://localhost:3002/api/items/Pessoas/marcio
+PUT http://localhost:3002/api/items/Pessoas/dusty
 Content-Type: application/json
 
 {
-  "nome": "marcio",
-  "adress": "Rua do caralho",
-  "aniversario": "10-10-10",
-  "numero": "A"
+  "fullname": "dusty3:)",
+  "adress": "Rua do areia",
+  "aniversario": "10-8-87",
+  "numero": "sourse 3"
 }
 

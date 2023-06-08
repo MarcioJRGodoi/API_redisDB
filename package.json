@@ -3,6 +3,7 @@
     "express": "^4.18.2",
     "nodemon": "^2.0.22",
     "promisify": "^0.0.3",
+    "react": "^18.2.0",
     "redis": "^4.6.5"
   },
   "name": "apifoda",
