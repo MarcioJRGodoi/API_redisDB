@@ -59,6 +59,7 @@ const itemController = {
       });
       let found = [];
       let keys = [];
+      let num = 0;
       for (let i = 0; hashs.keys.length > i; i++) {
         const item = await client.hScan(hashs.keys[i], 0, {
           MATCH: `${chave}*`,
@@ -72,8 +73,9 @@ const itemController = {
           res.status(404).json({ msg: "Item não encontrado." });
           return;
         }
+        num = num + found[i].length;
       }
-
+      console.log(num);
       res.json(found);
     } catch (error) {
       console.log(error);
