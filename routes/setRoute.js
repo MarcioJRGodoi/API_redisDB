@@ -11,7 +11,7 @@ router
   .route("/items/:hesh/:chave")
   .get((req, res) => itemController.get(req, res));
 
-router.delete("/items/:id", itemController.delete);
+router.delete("/items/:hesh/:chave", itemController.delete);
 
 router
   .route("/items/:hash/:chave")

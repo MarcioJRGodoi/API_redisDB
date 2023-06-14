@@ -1,11 +1,16 @@
 # POST /set - Define um valor na chave "chave1"
-POST http://localhost:3002/api/items
+POST http://localhost:3002/api/items/
 Content-Type: application/json
 
  {
-   "chave": "ppp",
-   "valor": "dsds",
-   "cod": "222"
+  "chave" : "marcio222",
+  "valor" : {
+  "fullname": "marcio di godoi",
+  "adress": "Rua do areia",
+  "aniversario": "10-8-87",
+  "numero": "sourse 3"
+  }
+  
  }
 ###
 
@@ -19,19 +24,21 @@ Content-Type: application/json
  }
 ###
 
-GET http://localhost:3002/api/items/Pessoas/p
+GET http://localhost:3002/api/items/Pessoas/Q
 
 ###
 GET http://localhost:3002/api/items/Pessoas
 
 ###
-PUT http://localhost:3002/api/items/Pessoas/dusty
+PUT http://localhost:3002/api/items/Pessoas/Ron
 Content-Type: application/json
 
 {
-  "fullname": "dusty3:)",
+  "fullname": "marcio di godoi",
   "adress": "Rua do areia",
   "aniversario": "10-8-87",
   "numero": "sourse 3"
 }
+###
+DELETE http://localhost:3002/api/items/Pessoas/marcia
 
